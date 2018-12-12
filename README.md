@@ -14,8 +14,12 @@ we were able to overcome many problems we encountered during the project and cre
 the player to experince. Some of the tools and software we used are
 
 > Unity
+
 > Vive / Oculus
+
 > Amper
+
 > Oculus Medium
+
 > SteamVR
 
