@@ -12,7 +12,7 @@ public class MovieManager : MonoBehaviour
     private GameObject fadePanel;
     private Image fader;
 	[SerializeField]
-	private Camera mainCamera;
+	private GameObject player;
 
     //Timer
     float timePassed;
@@ -21,6 +21,7 @@ public class MovieManager : MonoBehaviour
 	public bool firstTPOntoTrain = false;
     public bool firstDoorClosed = false;
 	public bool firstTrainMove = false;
+	public bool firstResetTrain = false;
 
     void Start()
     {
@@ -44,8 +45,8 @@ public class MovieManager : MonoBehaviour
 
 		if(timePassed > 7.0f && !firstTPOntoTrain)
 		{
-			Teleport(mainCamera.gameObject, new Vector3(25,4,-64));
-			mainCamera.transform.parent = GameObject.Find("Metro").transform;
+			Teleport(player, new Vector3(26,3,-64));
+			player.transform.parent = GameObject.Find("Metro").transform;
 			firstTPOntoTrain = true;
 		}
 
@@ -59,6 +60,13 @@ public class MovieManager : MonoBehaviour
 		{
 			MoveTrain();
 			firstTrainMove = true;
+		}
+
+		if(timePassed > 30.0f && !firstResetTrain)
+		{
+			ResetTrain();
+			SpawnPeople();
+			firstResetTrain = true;
 		}
     }
 
@@ -88,5 +96,15 @@ public class MovieManager : MonoBehaviour
 	void MoveTrain()
 	{
 		GetComponent<MoveMetro>().moveMetroIntoTunnel = true;
+	}
+
+	void ResetTrain()
+	{
+		GetComponent<MoveMetro>().resetMetro = true;
+	}
+
+	void SpawnPeople()
+	{
+		GetComponent<PeopleScript>().peopleActive = true;
 	}
 }
