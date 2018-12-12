@@ -86,7 +86,7 @@ public class PeopleScript : MonoBehaviour
 
 	void People2OntoTrain()
 	{
-		peopleSwarm2.transform.position = new Vector3(10, 0, 0);
+		peopleSwarm2.transform.position = new Vector3(10, 0, 1);
         peopleSwarm2.transform.parent = GameObject.Find("Metro").transform;
 	}
 }

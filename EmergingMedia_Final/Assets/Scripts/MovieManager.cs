@@ -35,6 +35,8 @@ public class MovieManager : MonoBehaviour
 	public bool thirdDoorClosed = false;
 	public bool thirdTrainMove = false;
 	public bool thirdResetTrain = false;
+	//Round 4
+	public bool fourthDoorOpen = false;
 
     void Start()
     {
@@ -142,6 +144,12 @@ public class MovieManager : MonoBehaviour
 			ResetTrain();
 			DespawnAllPeople();
 			thirdResetTrain = true;
+		}
+
+		if(timePassed > 120.0f & !fourthDoorOpen)
+		{
+			OpenDoors();
+			fourthDoorOpen = true;
 		}
     }
 
