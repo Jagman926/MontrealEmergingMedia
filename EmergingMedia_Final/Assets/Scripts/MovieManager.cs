@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.PostProcessing;
 
 public class MovieManager : MonoBehaviour
 {
@@ -13,6 +14,20 @@ public class MovieManager : MonoBehaviour
     private Image fader;
 	[SerializeField]
 	private GameObject player;
+
+	[SerializeField]
+	AudioSource openSFX;
+	[SerializeField]
+	AudioSource closeSFX;
+
+	[SerializeField]
+	AudioSource[] music;
+
+	[SerializeField]
+	PostProcessingBehaviour post;
+
+	[SerializeField]
+	GameObject song3;
 
     //Timer
     float timePassed;
@@ -44,6 +59,8 @@ public class MovieManager : MonoBehaviour
         timePassed = 0.0f;
         fader = fadePanel.GetComponent<Image>();
         fader.CrossFadeAlpha(0, 0, false);
+		post.enabled = false;
+		music[0].Play();
     }
 
     void Update()
@@ -81,6 +98,7 @@ public class MovieManager : MonoBehaviour
 		{
 			ResetTrain();
 			SpawnPeople();
+			music[1].Play();
 			firstResetTrain = true;
 		}
 
@@ -112,6 +130,8 @@ public class MovieManager : MonoBehaviour
 		{
 			ResetTrain();
 			SpawnPeople2();
+			Instantiate(song3);
+			//music[2].Play();
 			secondResetTrain = true;
 		}
 
@@ -124,6 +144,7 @@ public class MovieManager : MonoBehaviour
 		if(timePassed > 75.0f && !thirdMovePeopleOn)
 		{
 			MovePeople2();
+			post.enabled = true;
 			thirdMovePeopleOn = true;
 		}
 
@@ -143,6 +164,10 @@ public class MovieManager : MonoBehaviour
 		{
 			ResetTrain();
 			DespawnAllPeople();
+			foreach(AudioSource asssss in music){
+				asssss.Stop();
+			}
+			post.enabled = false;
 			thirdResetTrain = true;
 		}
 
@@ -168,11 +193,13 @@ public class MovieManager : MonoBehaviour
 
     void OpenDoors()
     {
+		openSFX.Play();
         GetComponent<DoorHolder>().openDoors = true;
     }
 
     void CloseDoors()
     {
+		closeSFX.Play();
         GetComponent<DoorHolder>().closeDoors = true;
     }
 
