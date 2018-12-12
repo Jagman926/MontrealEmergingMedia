@@ -17,11 +17,24 @@ public class MovieManager : MonoBehaviour
     //Timer
     float timePassed;
     //Events
+	//Round 1
     public bool firstDoorOpened = false;
 	public bool firstTPOntoTrain = false;
     public bool firstDoorClosed = false;
 	public bool firstTrainMove = false;
 	public bool firstResetTrain = false;
+	//Round 2
+	public bool secondDoorOpen = false;
+	public bool secondMovePeopleOn = false;
+	public bool secondDoorClosed = false;
+	public bool secondTrainMove = false;
+	public bool secondResetTrain = false;
+	//Round 3
+	public bool thirdDoorOpen = false;
+	public bool thirdMovePeopleOn = false;
+	public bool thirdDoorClosed = false;
+	public bool thirdTrainMove = false;
+	public bool thirdResetTrain = false;
 
     void Start()
     {
@@ -68,6 +81,68 @@ public class MovieManager : MonoBehaviour
 			SpawnPeople();
 			firstResetTrain = true;
 		}
+
+		if(timePassed > 35.0f && !secondDoorOpen)
+		{
+			OpenDoors();
+			secondDoorOpen = true;
+		}
+
+		if(timePassed > 40.0f && !secondMovePeopleOn)
+		{
+			MovePeople();
+			secondMovePeopleOn = true;
+		}
+
+		if(timePassed > 45.0f && !secondDoorClosed)
+		{
+			CloseDoors();
+			secondDoorClosed = true;
+		}
+
+		if(timePassed > 50.0f && !secondTrainMove)
+		{
+			MoveTrain();
+			secondTrainMove = true;
+		}
+
+		if(timePassed > 65.0f && !secondResetTrain)
+		{
+			ResetTrain();
+			SpawnPeople2();
+			secondResetTrain = true;
+		}
+
+		if(timePassed > 70.0f && !thirdDoorOpen)
+		{
+			OpenDoors();
+			thirdDoorOpen = true;
+		}
+
+		if(timePassed > 75.0f && !thirdMovePeopleOn)
+		{
+			MovePeople2();
+			thirdMovePeopleOn = true;
+		}
+
+		if(timePassed > 80.0f && !thirdDoorClosed)
+		{
+			CloseDoors();
+			thirdDoorClosed = true;
+		}
+
+		if(timePassed > 85.0f && !thirdTrainMove)
+		{
+			MoveTrain();
+			thirdTrainMove = true;
+		}
+
+		if(timePassed > 110.0f && !thirdResetTrain)
+		{
+			ResetTrain();
+			DespawnAllPeople();
+			thirdResetTrain = true;
+		}
     }
 
     void Teleport(GameObject move, Vector3 dest)
@@ -106,5 +181,25 @@ public class MovieManager : MonoBehaviour
 	void SpawnPeople()
 	{
 		GetComponent<PeopleScript>().peopleActive = true;
+	}
+
+	void MovePeople()
+	{
+		GetComponent<PeopleScript>().peopleOntoTrain = true;
+	}
+
+	void SpawnPeople2()
+	{
+		GetComponent<PeopleScript>().people2Activate = true;
+	}
+
+	void MovePeople2()
+	{
+		GetComponent<PeopleScript>().people2OntoTrain = true;
+	}
+
+	void DespawnAllPeople()
+	{
+		GetComponent<PeopleScript>().peopleDeactive = true;
 	}
 }
